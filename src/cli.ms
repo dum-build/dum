@@ -5,9 +5,9 @@ import
 	.Dum
 	.private.util $do-with-beep
 
-cli. |
+cli. !\
 	| Runs dum using the current pwd.
-	$do-with-beep $!|
+	$do-with-beep $!\
 		args = argh.argv
 		dum = $ Dum.$new env.PWD
 
@@ -24,6 +24,6 @@ cli. |
 
 methods = new Id-Set ['build 'watch 'serve]
 
-usage! = !|
+usage! = !\
 	error "Usage: dum #(=> String methods "|")"
 	exit 1

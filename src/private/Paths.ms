@@ -10,18 +10,18 @@ Paths. class
 	| .full-out-path: Absolute path to output file.
 
 	construct transformers in-dir out-dir .rel-in-path
-		.full-in-path = join in-dir rel-in-path
+		.full-in-path := join in-dir rel-in-path
 
 		todo [dir. name.] = parse rel-in-path
 		p = parse rel-in-path
-		.in-extension = p.ext
+		.in-extension := p.ext
 
-		out-name = ?-cond (transformers.?out-extension .in-extension) p.name |ext
+		out-name = ?-cond (transformers.?out-extension .in-extension) p.name \ext
 			"#(p.name).#ext"
-		.rel-out-path = mangle-path (join p.dir out-name)
-		.full-out-path = join out-dir .rel-out-path
+		.rel-out-path := mangle-path (join p.dir out-name)
+		.full-out-path := join out-dir .rel-out-path
 
-mangle-path = |path
+mangle-path = \path
 	| Mangle path so it can be used as a URL.
 	replacements =
 		'! -> 'bang

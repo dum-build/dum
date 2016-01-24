@@ -1,7 +1,7 @@
 import
 	global require
-	msl.dist.control opr
-	msl.dist.Object property?
+	msl.lib.control opr
+	msl.lib.Object property?
 	path join
 	.fs-util $path-exists?
 
@@ -10,7 +10,7 @@ Options. class
 	| See descriptions [here](//dum-build.org/config).
 
 	static
-		'$new $|package-dir
+		$new $\package-dir
 			package-config = require (join package-dir "package.json")
 			config = opr package-config.dum ~(new Object)
 			opts = apply-defaults config
@@ -21,7 +21,7 @@ Options. class
 				opts. new Object
 				sound. true
 
-			default-bower = in-dir. 'bower_components out-dir. 'lib
+			default-bower = {in-dir. 'bower_components out-dir. 'lib}
 			opts.?bower := case opts.bower
 				not null?_
 					?some apply-defaults _ default-bower
@@ -42,7 +42,7 @@ Options. class
 	construct values
 		Object.assign this values
 
-$apply-in-out-defaults!. $!|opts package-dir
+$apply-in-out-defaults!. $!\opts package-dir
 	case
 		not null? opts.in-dir
 			if null? opts.out-dir
@@ -59,7 +59,7 @@ $apply-in-out-defaults!. $!|opts package-dir
 			throw "Dum config does not have `in-dir`, and neither `assets` nor `src` directories exist."
 
 todo move to msl
-apply-defaults. |provided defaults
+apply-defaults. \provided defaults
 	with new Object as o
 		for key of Object.keys provided
 			assert property? defaults key throw "No such option #key."

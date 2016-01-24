@@ -1,15 +1,16 @@
 import
-	msl.dist.Promise $done
+	msl.lib.Promise $done
 	.Logger
 
-$done-with-beep. |promise
+$done-with-beep. \promise
 	| Complains about any errors by beeping.
-	promise.catch |err
+	promise.catch \err
 		except
 			try
-				$done ((new Logger (sound. true)).$log-error! err)
+				logger = new Logger {sound. true}
+				$done (logger.$log-error! err)
 			catch
 				console.error _.stack
 
-$do-with-beep. |func
+$do-with-beep. \func
 	$done-with-beep func()

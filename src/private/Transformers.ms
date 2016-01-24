@@ -1,8 +1,8 @@
 import
 	fs-extra-promise copyAsync outputFileAsync
 	global require
-	msl.dist.control opr
-	msl.dist.Object property?
+	msl.lib.control opr
+	msl.lib.Object property?
 	path join
 	jstransformer
 
@@ -10,18 +10,18 @@ Transformers. class
 	| Keeps track of all jstransformers and can transform any file.
 
 	construct options
-		.ext->transformer = create-ext->transformer options
+		.ext->transformer := create-ext->transformer options
 
-	'?out-extension |in-extension
+	?out-extension \in-extension
 		| File extension for output file.
 		(.choose-transform in-extension).?out-extension
 
-	'$transform! $|:Array[Str] paths
+	$transform! $\:Array[Str] paths
 		| Transform input file and write to output file.
 		| return: dependencies
 		$ (.choose-transform paths.in-extension).$transform! paths.full-in-path paths.full-out-path
 
-	my 'choose-transform |in-extension
+	my choose-transform \in-extension
 		case in-extension
 			empty?_
 				new Identity-Transform ?None
@@ -33,8 +33,8 @@ Transformers. class
 				?-or (?get .ext->transformer ext) ~(new Identity-Transform (?some ext))
 
 || Object like `jade. (pretty. true)`
-create-ext->transformer = |options
-	package-config package-dir opts = options
+create-ext->transformer = \options
+	{package-config package-dir opts} = options
 	unused-opts = => Id-Set (Object.keys opts)
 	transform-names-with-no-options = []
 	with empty Id-Map as ext->transformer
@@ -52,7 +52,7 @@ create-ext->transformer = |options
 						transform-names-with-no-options.push _
 						null
 				for ext of transform.@in-extensions
-					ext->transformer[ext] = transform
+					ext->transformer[ext] := transform
 
 		for pkg-name of unused-opts
 			throw "
@@ -61,17 +61,17 @@ create-ext->transformer = |options
 
 Real-Transform = class
 	construct transformer .-options
-		.-transformer = jstransformer transformer
+		.-transformer := jstransformer transformer
 
-	get '@in-extensions
+	get @in-extensions
 		.-transformer.inputFormats
 
-	get '?out-extension
+	get ?out-extension
 		Opt->? .-transformer.outputFormat
 
-	'$transform! $|full-in-path full-out-path
-		locals = filename. full-in-path
-		body dependencies = $ .-transformer.renderFileAsync full-in-path .-options locals
+	$transform! $\full-in-path full-out-path
+		locals = {filename. full-in-path}
+		{body dependencies} = $ .-transformer.renderFileAsync full-in-path .-options locals
 		$ outputFileAsync full-out-path body
 		?-or (Opt->? dependencies) []
 
@@ -83,6 +83,6 @@ Identity-Transform = class
 	construct .?out-extension
 		pass
 
-	'$transform! $|full-in-path full-out-path
+	$transform! $\full-in-path full-out-path
 		$ copyAsync full-in-path full-out-path
 		[]

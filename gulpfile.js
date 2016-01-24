@@ -7,8 +7,8 @@ const
 	sourcemaps = require('gulp-sourcemaps'),
 	watch = require('gulp-watch')
 
-gulp.task('compile', () => pipeMs(gulp.src(src), 'dist'))
-gulp.task('watch', () => pipeMs(srcWatch(src), 'dist'))
+gulp.task('compile', () => pipeMs(gulp.src(src), 'lib'))
+gulp.task('watch', () => pipeMs(srcWatch(src), 'lib'))
 
 const src = 'src/**/*.ms'
 
@@ -17,7 +17,7 @@ function pipeMs(stream, dest) {
 	.pipe(sourcemaps.init())
 	.pipe(mason({
 		includeAmdefine: true,
-		mslPath: 'msl/dist'
+		mslPath: 'msl/lib'
 	}))
 	.pipe(sourcemaps.write())
 	.pipe(gulp.dest(dest))

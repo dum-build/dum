@@ -1,13 +1,13 @@
 {
 	"name": "dum",
 	"version": "0.0.0",
+	"license": "Unlicense",
+	"repository": "dum-build/dum",
 	"bin": {"dum": "./bin/dum"},
 	"scripts": {
 		"build": "gulp compile",
 		"watch": "gulp watch"
 	},
-	"repository": "dum-build/dum",
-	"license": "WTFPL",
 	"dependencies": {
 		"argh": "0.1.4",
 		"chalk": "1.1.1",
@@ -16,13 +16,13 @@
 		"jstransformer": "0.0.4",
 		"machine-that-goes-bing": "dum-build/machine-that-goes-bing",
 		"msl": "mason-lang/msl",
-		"node-watch": "0.3.4",
+		"node-watch": "0.3.5",
 		"pad": "1.0.0",
 		"source-map-support": "0.4.0"
 	},
 	"devDependencies": {
 		"gulp": "3.9.0",
-		"gulp-cli": "1.0.0",
+		"gulp-cli": "1.1.0",
 		"gulp-mason": "mason-lang/gulp-mason",
 		"gulp-plumber": "1.0.1",
 		"gulp-sourcemaps": "1.6.0",
